@@ -1,0 +1,30 @@
+<purpose>
+Find the main sentence in each paragraph of the article I provided, and make sure it is consistent with the topic and title of the article.
+</purpose>
+
+<instructions>
+    <instruction>Read the theme and title of the article in detail to understand the focus of the content.</instruction>
+    <instruction>Read the content of the article I provided, where each paragraph begins with the symbol “%xxxx%” and ends with the symbol “&yyyy&”. There are 12 paragraphs in this article, which results in at least 12 main sentences.</instruction>
+    <instruction>Find the main sentence in each paragraph of the article. Remember, the main sentence is an explicit sentence that should not be changed word by word. You just need to choose an existing main sentence, and make sure it matches the theme and title of the article.</instruction>
+    <instruction>Use the examples provided as a reference to format the output, with results that do not include the symbols '%xxxx%' and '&yyyy&'.</instruction>
+</instructions>
+
+<examples>
+1. ................
+2. ................
+3. ................
+4. ................
+etc
+</examples>
+
+<theme>
+</theme>
+
+<article-title>
+#
+</article-title>
+
+<article>
+</article>
+
+Your identified main sentence from the article:
