@@ -13,3 +13,7 @@
 <instructions>Saya tidak suka didalam program terdapat komentar line, bisakah anda hapus semua komentar line, sehingga yang terdapat didalam program adalah kode penting saja !</instructions>
 <program>
 </program>
+
+<purpose> Berikan analisa mendalam text terkait input (Inframerah, Usia, Heart_Rate) dengan output (CHOL) ! </purpose>
+<text>
+</text>
