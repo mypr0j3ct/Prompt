@@ -17,3 +17,5 @@
 <purpose> Berikan analisa mendalam text terkait input (Inframerah, Usia, Heart_Rate) dengan output (CHOL) ! </purpose>
 <text>
 </text>
+
+Buatkan saya program Python yang dapat mengakses file Excel pada path `C:\Users\MRX\Downloads\hasil_perhitungan.xlsx`. Pada file Excel tersebut, hanya terdapat satu sheet dengan nama `MKN`, yang terdiri dari tiga kolom, yaitu `RHR`, `age`, dan `chol`. Saya ingin program ini dapat membuat file Excel baru pada path `C:\Users\MRX\Videos\Captures\Python_Final`, yang berisi tiga kolom: `RHR`, `age`, dan `chol`, dengan filter tambahan. Jika nilai kolom `RHR` lebih besar dari `100` atau lebih kecil dari `60,` maka baris tersebut akan dihapus. Baris yang tersisa adalah yang memiliki nilai `RHR` dalam rentang `60` hingga `100` saja. Mohon dibuatkan program Python-nya.
