@@ -1,0 +1,22 @@
+<purpose>
+Write explanation that link the main sentences so that they reflect the essence of the whole article. The theme, title, and main sentence of each paragraph will be provided for reference.
+</purpose>
+
+<instructions>
+    <instruction>Read and analyze in depth the theme, article title, and main sentence that I have presented.</instruction>
+    <instruction>Make sure the explanation captures each main sentence provided without adding external information.</instruction>
+    <instruction>Write a clear and detailed description of the article based on the main sentence given.</instruction>
+    <instruction>Ensure that the output you produce is in Indonesian.</instruction>
+</instructions>
+
+<theme>
+</theme>
+
+<article-title>
+#
+</article-title>
+
+<main-sentence>
+</main-sentence>
+
+The explanation you have created is based on the main sentence provided:
