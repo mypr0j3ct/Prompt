@@ -1,0 +1,300 @@
+<purpose>Your goal is to help me modify the programme code to fit my-requirement.</purpose>
+
+<instructions>
+    <instruction>You are asked to take an in-depth look at the program code `masuk.html`, `config-realtime-database`, `config-sdk.js`, `index.html` and `daftar.html`. Make sure that I can adapt it to my-requirement.</instruction>
+    <instruction>The development environment I'm using is the vanila javascript and `firebasejs/11.4.0/firebase-app.js`. So make sure any changes you make are compatible with the `firebasejs/11.4.0/firebase-app.js` sdk.</instruction>
+    <instruction>Use this format: {Think step by step, <steps>{give reasoning}</steps> Therefore, the answer is: <final_answer>{program}</final_answer>}</instruction>
+</instructions> 
+
+<my-requirement>I want users to be able to create an account through the `daftar.html` page, where the username, email, and password will be stored in the realtime database. Then, when users want to log in through the `masuk.html` page, they will be redirected to the `index.html` page.</my-requirement>
+
+<daftar.html>
+
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tampilan Daftar Akun</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .signup-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .signup-container h2 {
+            margin-bottom: 20px;
+        }
+        .signup-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .signup-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .signup-container button:hover {
+            background-color: #45a049;
+        }
+        .signup-container p {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .signup-container a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .signup-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script type="module" src="./config-sdk.js"></script>
+</head>
+<body>
+
+    <div class="signup-container">
+        <h2>Daftar Akun</h2>
+        <form id="signupForm">
+            <input type="text" id="username" placeholder="Username" required><br>
+            <input type="email" id="email" placeholder="Email" required><br>
+            <input type="password" id="password" placeholder="Password" required><br>
+            <input type="password" id="confirm_password" placeholder="Konfirmasi Password" required><br>
+            <button type="submit">Daftar</button>
+        </form>
+        <p>Sudah punya akun? <a href="masuk.html">Masuk</a></p>
+    </div>
+
+    <script type="module">
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+        import { app } from "./config-sdk.js"; // Import app
+
+        const db = getDatabase(app);
+        const signupForm = document.getElementById('signupForm');
+
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            if (password !== confirmPassword) {
+                alert('Password dan Konfirmasi Password tidak sama.');
+                return;
+            }
+
+            // Create a valid Firebase key from the email.  Replace invalid characters.
+            const emailKey = email.replace(/[.#$[\]]/g, '_');
+            const userRef = ref(db, `users/${emailKey}`);
+
+
+            set(userRef, {
+                username: username,
+                email: email,
+                password: password // NEVER store plain text passwords in production.
+            })
+            .then(() => {
+                alert('Pendaftaran berhasil!');
+                // Optionally, redirect to login page:
+                window.location.href = 'masuk.html';
+            })
+            .catch((error) => {
+                console.error("Error writing document: ", error);
+                alert('Terjadi kesalahan: ' + error.message);
+            });
+        });
+    </script>
+</body>
+</html>
+```
+
+</daftar.html>
+
+<masuk.html>
+
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tampilan Login Sederhana</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #45a049;
+        }
+        .login-container p {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+     <script type="module" src="./config-sdk.js"></script>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Email" required><br>
+            <input type="password" id="password" placeholder="Password" required><br>
+            <button type="submit">Masuk</button>
+        </form>
+        <p>Belum punya akun? <a href="daftar.html">Daftar</a></p>
+    </div>
+
+    <script type="module">
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+        import { app } from "./config-sdk.js";
+
+        const db = getDatabase(app);
+        const loginForm = document.getElementById('loginForm');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const emailKey = email.replace(/[.#$[\]]/g, '_');
+            const userRef = ref(db, `users/${emailKey}`);
+
+            onValue(userRef, (snapshot) => {
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    if (userData.password === password) {
+                        alert('Login berhasil!');
+                        window.location.href = 'index.html'; // Redirect to index.html
+                    } else {
+                        alert('Password salah.');
+                    }
+                } else {
+                    alert('User tidak ditemukan.');
+                }
+            }, {
+                onlyOnce: true // Ensure the listener only runs once
+            });
+        });
+    </script>
+</body>
+</html>
+```
+
+</masuk.html>
+
+<index.html>
+
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Selamat datang!</h1>
+    <p>Anda berhasil login.</p>
+</body>
+</html>
+```
+
+<index.html>
+
+<config-sdk.js>
+
+```js
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+import { getDatabase, ref, set, onValue} from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+ 
+const firebaseConfig = {
+  apiKey: "AIzaSyDX9FQQai2rWeUubCX903z-yPMro_TGTIQ",
+  authDomain: "projectv1-a9190.firebaseapp.com",
+  databaseURL: "https://projectv1-a9190-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "projectv1-a9190",
+  storageBucket: "projectv1-a9190.firebasestorage.app",
+  messagingSenderId: "343955967254",
+  appId: "1:343955967254:web:6de9646cb6140a07a89437",
+  measurementId: "G-N903P4FH5W"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+export {app}
+```
+
+</config-sdk.js>
+
+<config-realtime-database>
+
+```
+{
+  "rules": {
+    ".read": "now < 1743526800000",  // 2025-4-2
+    ".write": "now < 1743526800000",  // 2025-4-2
+  }
+}
+```
+
+</config-realtime-database>
